@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weba-dep
+  labels:
+    app: weba
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weba
+  template:
+    metadata:
+      labels:
+        app: weba
+    spec:
+      containers:
+        - name: weba
+          imagePullPolicy: Never
+          image: weba
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: webahtml
+              mountPath: /usr/share/nginx/html
+              readOnly: false
+      volumes:
+        - name: webahtml
+          hostPath:
+            path: /volumes/weba

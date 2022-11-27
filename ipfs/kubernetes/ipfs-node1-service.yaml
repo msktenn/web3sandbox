@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ipfs-node1-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: ipfs-node1
+  ports:
+    - protocol: UDP
+      name: ipfs4001udp
+      port: 4001
+      targetPort: 4001
+    - protocol: TCP
+      name: ipfs4001tcp
+      port: 4001
+      targetPort: 4001
+    - protocol: TCP
+      name: ipfs8080
+      port: 8080
+      targetPort: 8080
+    - protocol: TCP
+      name: ipfs5001
+      port: 5001
+      targetPort: 5001

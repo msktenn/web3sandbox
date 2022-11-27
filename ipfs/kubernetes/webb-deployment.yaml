@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webb-dep
+  labels:
+    app: webb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webb
+  template:
+    metadata:
+      labels:
+        app: webb
+    spec:
+      containers:
+        - name: webb
+          imagePullPolicy: Never
+          image: webb
+          ports:
+            - containerPort: 80

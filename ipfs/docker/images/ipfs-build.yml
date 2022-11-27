@@ -1,0 +1,7 @@
+version: "2.4"
+services:
+  weba:
+    image: ipfs/restrike:latest
+    build:
+      context: ${BLOCKCHAIN_HOME}/ipfs/docker
+      dockerfile: ./images/ipfs.Dockerfile

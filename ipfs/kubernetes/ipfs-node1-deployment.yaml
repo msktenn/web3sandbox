@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ipfs-node1-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /data/ipfs_node1
+    type: ""
+  storageClassName: standard
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ipfs-node1-pvc
+spec:
+  storageClassName: standard
+  volumeName: ipfs-node1-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: ipfs-node1-dep
+  labels:
+    app: ipfs-node1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ipfs-node1
+  template:
+    metadata:
+      labels:
+        app: ipfs-node1
+    spec:
+      containers:
+        - name: ipfs-node1
+          imagePullPolicy: Never
+          image: ipfs/restrike
+          env:
+            - name: IPFS_SWARM_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: ipfs-config
+                  key: ipfs-swarm-key
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              memory: 512Mi
+          ports:
+            - containerPort: 4001
+            - containerPort: 5001
+            - containerPort: 8080
+          volumeMounts:
+            - name: data
+              mountPath: /data/ipfs
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: ipfs-node1-pvc
