@@ -1,0 +1,76 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: eth-bootnode-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /data/eth_bootnode/
+    type: ""
+  storageClassName: standard
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: eth-bootnode-pvc
+spec:
+  storageClassName: standard
+  volumeName: eth-bootnode-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: geth-bootnode
+spec:
+  replicas: 1
+  serviceName: geth-bootnode-service
+  selector:
+    matchLabels:
+      app: geth-bootnode
+  template:
+    metadata:
+      labels:
+        app: geth-bootnode
+    spec:
+      containers:
+        - name: geth-bootnode
+          imagePullPolicy: Never
+          image: ethereum/restrike
+          #            args:
+          #              [
+          #                "--http",
+          #                "--http.addr=0.0.0.0",
+          #                "--http.vhosts=geth-mainnet-full",
+          #                "--http.api=eth,net,web3,txpool",
+          #                "--ws",
+          #                "--ws.addr=0.0.0.0",
+          #                "--datadir=/data",
+          #              ]
+          env:
+          resources:
+            limits:
+              memory: 12000Mi
+            requests:
+              memory: 10000Mi
+          ports:
+            - containerPort: 8545
+              name: gethrpc
+            - containerPort: 30303
+              name: gethdiscovery
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: eth-bootnode-pvc

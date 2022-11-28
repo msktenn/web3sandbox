@@ -1,0 +1,9 @@
+version: "2.4"
+services:
+  weba:
+    image: ethereum/restrike:latest
+    build:
+      context: ${BLOCKCHAIN_HOME}/ethereum/docker
+      args:
+        - ACCOUNT_PASSWORD=High12Noon
+      dockerfile: ./images/eth.Dockerfile
