@@ -2,48 +2,50 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: eth-bootnode-pv
+  name: eth-demo-pv
 spec:
   accessModes:
     - ReadWriteOnce
   capacity:
-    storage: 1Gi
+    storage: 10Gi
   hostPath:
-    path: /data/eth_bootnode/
+    path: /data/eth-demo
     type: ""
   storageClassName: standard
   volumeMode: Filesystem
+
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: eth-bootnode-pvc
+  name: eth-demo-pvc
 spec:
   storageClassName: standard
-  volumeName: eth-bootnode-pv
+  volumeName: eth-demo-pv
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
+
 ---
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
-  name: geth-bootnode
+  name: geth-demo
 spec:
   replicas: 1
-  serviceName: geth-bootnode-service
+  serviceName: geth-demo-service
   selector:
     matchLabels:
-      app: geth-bootnode
+      app: geth-demo
   template:
     metadata:
       labels:
-        app: geth-bootnode
+        app: geth-demo
     spec:
       containers:
-        - name: geth-bootnode
+        - name: geth-demo
           imagePullPolicy: Never
           image: ethereum/restrike
           #            args:
@@ -59,9 +61,9 @@ spec:
           env:
           resources:
             limits:
-              memory: 12000Mi
+              memory: 4Gi
             requests:
-              memory: 10000Mi
+              memory: 2Gi
           ports:
             - containerPort: 8545
               name: gethrpc
@@ -73,4 +75,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: eth-bootnode-pvc
+            claimName: eth-demo-pvc
