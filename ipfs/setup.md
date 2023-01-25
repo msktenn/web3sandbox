@@ -16,6 +16,12 @@ docker run -d --rm --name asite -e INSTANCE=asite -e PORT=80 nginxa
 
 docker run -d --rm --name bsite -e INSTANCE=bsite -e PORT=80 nginxb 
 
+podman machine set --cpus=4
+podman machine set -m=12G
+podman machine set -m=12288
+podman machine list
+podman machine start
+podman machine stop
 
 minikube start
 minikube addons enable ingress
@@ -27,6 +33,8 @@ brew install docker
 brew install kubectl
 brew install minikube
 
+
+podman machine start
 minikube config set cpus 6
 minikube config set memory 32g
 
