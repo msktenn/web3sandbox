@@ -14,6 +14,7 @@ sudo resize2fs /dev/vda1
 
 geth --dev --http --http.api eth,web3,personal,net --http.corsdomain "http://remix.ethereum.org" --datadir /data
 
+geth --http --http.addr=0.0.0.0 --http.api=eth,net,web3,personal --ws --ws.addr=0.0.0.0 --datadir=/data
 
 eth.accounts
 eth.coinbase
@@ -32,6 +33,9 @@ geth attach http://10.106.207.143:8545
 
 
 geth –identity “restrike” init /tmp/genesis.json –datadir /data/restrikeprivatechain
+geth --datadir /data --networkid 1114 console 2 --rpc --rpcport 8543 --rpcaddr 127.0.0.1
+
+geth -http --http.api eth,web3,personal,net --http.corsdomain "http://remix.ethereum.org" --datadir /data
 
 
 EOA (Externally Owned Account) -> Private Key

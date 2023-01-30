@@ -10,5 +10,5 @@ RUN geth init /tmp/genesis.json \
     && geth account new --password /tmp/password \
     && rm -f /tmp/password
 
-#ENTRYPOINT ["geth"]
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["geth"]
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
