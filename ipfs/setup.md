@@ -126,3 +126,4 @@ kubectl describe ingress ingressname
 
 minikube mount /Users/dad/code/blockchain/datashare/ipfs/volumes:/volumes
 
+

@@ -14,6 +14,7 @@ sudo resize2fs /dev/vda1
 
 geth --dev --http --http.api eth,web3,personal,net --http.corsdomain "http://remix.ethereum.org" --datadir /data
 
+---THIS IS IT
 geth --http --http.addr=0.0.0.0 --http.api=eth,net,web3,personal --ws --ws.addr=0.0.0.0 --datadir=/data
 
 eth.accounts
@@ -27,6 +28,7 @@ eth.getTransaction("0x9d2c1b7cbad420a0a29122e91bffeb744e63172dab0f1d4a95b1c312b3
 
 
 
+geth attach http://10.98.25.58:8545
 geth attach http://10.108.11.16:8545
 
 geth attach http://10.106.207.143:8545
@@ -36,6 +38,15 @@ geth –identity “restrike” init /tmp/genesis.json –datadir /data/restrike
 geth --datadir /data --networkid 1114 console 2 --rpc --rpcport 8543 --rpcaddr 127.0.0.1
 
 geth -http --http.api eth,web3,personal,net --http.corsdomain "http://remix.ethereum.org" --datadir /data
+
+
+     #     "--http",
+          #     "--http.addr=0.0.0.0",
+          #     "--http.vhosts=geth-mainnet-full",
+          #     "--http.api=eth,net,web3,txpool",
+          #     "--ws",
+          #     "--ws.addr=0.0.0.0",
+          #     "--datadir=/data",
 
 
 EOA (Externally Owned Account) -> Private Key
