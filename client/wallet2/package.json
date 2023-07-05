@@ -1,0 +1,22 @@
+{
+    "name": "@datascan/wallet",
+    "version": "1.0.0",
+    "description": "Datascan's ethereum wallet",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "rm -rf ./dist && tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "files": [
+        "dist"
+    ],
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^20.3.3",
+        "typescript": "^5.1.6"
+    },
+    "type": "module"
+}
