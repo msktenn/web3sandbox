@@ -19,6 +19,7 @@ docker run -d --rm --name bsite -e INSTANCE=bsite -e PORT=80 nginxb
 podman machine set --cpus=4
 podman machine set -m=12G
 podman machine set -m=12288
+podman machine set -m=32768
 podman machine list
 podman machine start
 podman machine stop
@@ -40,6 +41,8 @@ minikube config set memory 32g
 
 minikube start --kubernetes-version=v1.19.14 --driver=hyperkit --container-runtime=docker
 minikube start --driver=hyperkit --container-runtime=docker
+
+minikube start --driver=podman --container-runtime=docker
 
 minikube kubectl get nodes
 eval $(minikube docker-env)
@@ -63,6 +66,13 @@ minikube addons list
 minikube status
 
 minikube start --vm-driver=hyperkit  --v=7 --alsologtostderr
+
+
+
+minikube start --driver=podman --container-runtime=docker --mount-string="$BLOCKCHAIN_HOME/ethereum/volumes:/data/eth"  --disk-size 50000mb --mount
+
+minikube start --driver=podman --container-runtime=docker --mount-string="/Users/mknight/code/web3sandbox/ethereum/volumes:/data/eth"  --disk-size 50000mb --mount
+
 
 minikube pause
 minikube unpause
