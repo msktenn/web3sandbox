@@ -1,9 +1,8 @@
 import { introduceMyself } from "../src/index";
 
-describe("introduceMyself", () => {
-
-    it("should introduce me", () => {
-        console.log("hello");
-        expect(introduceMyself("J", "H")).toEqual("Hello J H");
-    });
+describe("Configuratio", () => {
+  it("should be as singleton", () => {
+    console.log("test");
+    expect(introduceMyself("J", "H")).toEqual("Hello J H");
+  });
 });
